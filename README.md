@@ -112,7 +112,7 @@ Upon running the image as a container, you should have already seen the followin
     http://localhost:port_number/service_name/?n1=value1&n2=value2
 
 ## How To Connect To the Database:
-After installing the application and datbase into your Kubernetes cluster (I used a local Kubernetes cluster via Docker Desktop), install MongoDB Compass and use the uri to connect to the database:
+After installing the application and database into your Kubernetes cluster (I used a local Kubernetes cluster via Docker Desktop), install MongoDB Compass and use the uri to connect to the database:
 
 The uri will look similar to this:
 
