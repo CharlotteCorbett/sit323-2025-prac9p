@@ -2,7 +2,7 @@
 
 ## Containerised Calculator Microservice
 This project is a containerised calculator that receives parameters via API calls then returns the result along with the HTTP status, via an Express server.
-In this version, the containerised calculator is deployed to a locally hosted Kubernetes cluster.
+In this version, the containerised calculator is deployed to a locally hosted Kubernetes cluster and logs the results and errors to a standalone MongoDB database installed in the cluster.
 
 ### How To Build Calculator Microservice Image:
 ---
@@ -60,6 +60,12 @@ In the project terminal, type:
 `kubectl apply -f createDeployment.yaml`
 Go back to the Dashboard and notice that a Deployment has been created. 
 
+You will also need to create a Kubernetes Secret with all the private or sensitive files in it such as the database uri, the image (if you are using a private Docker repository), and the database user credentials.
+
+Next, connect to the database and create an admin user with admin rights.
+After the user is created, reconnect to the database as the new admin user you created.
+
+
 
 ### How To Access Calculator Microservice:
 ---
@@ -104,6 +110,15 @@ Upon running the image as a container, you should have already seen the followin
 
 2. Using Curl, lodge a HTTP GET request to the API in the following format: 
     http://localhost:port_number/service_name/?n1=value1&n2=value2
+
+## How To Connect To the Database:
+After installing the application and datbase into your Kubernetes cluster (I used a local Kubernetes cluster via Docker Desktop), install MongoDB Compass and use the uri to connect to the database:
+
+The uri will look similar to this:
+
+mongodb://username:password@localhost:32000/?authMechanism=DEFAULT
+
+Once connected, click the 'local' database and you will see the 'results' document and the 'errors' document. These are where the application logs its results and errors inside the database.
 
 ### Calculator Services:
 ---
