@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calc-microserv-mondb-sa
+  labels:
+    app: myapp
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: mynode
+        image: 
+          valueFrom:
+            secretKeyRef:
+              key: image
+              name: mongodb-secret
+        ports:
+        - containerPort: 8080
+        env:
+        - valueFrom:
+            secretKeyRef:
+              key: mongodb-uri
+              name: mongodb-secret

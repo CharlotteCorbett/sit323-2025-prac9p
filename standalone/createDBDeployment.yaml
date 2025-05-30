@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-sa
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo-sa
+  template:
+    metadata:
+      labels:
+        app: mongo-sa
+    spec:
+      containers:
+        - image: mongo
+          name: mongo-sa
+          args: ["--dbpath", "/data/db"]
+          env:
+            - valueFrom:
+                secretKeyRef:
+                  key: mongo-admin-username
+                  name: mongodb-secret
+            - valueFrom:
+                secretKeyRef:
+                  key: mongo-admin-pwd
+                  name: mongodb-secret
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-sa-volume
+      volumes:
+        - name: mongo-sa-volume
+          persistentVolumeClaim:
+            claimName: mongo-sa-pvc
